@@ -148,16 +148,22 @@ with features:
         "Jim Cramer index"
     )
                                 )
-
+    
+    # The if statement takes care of the selection
     if selection == "Trending":
         col_1.markdown("****Cryptocurrency****")
         col_2.markdown("****Equities****")
         col_3.markdown("****ETFs****")
         col_4.markdown("****Asset Managers****")
 
+        # spaces is supposed to add spaces to the prices of everything
+        # below using markdown
+        spaces = "&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"
+
         # CRYPTOCURRENCY
-        crypto_rank = cr()  # returns an array of the top 10-12 crypto assets ranked
-        for s in crypto_rank:
+        crypto_rank = cr()  # Returns an array of the top 10-12 crypto assets ranked
+        for s in range(10):
+            s = crypto_rank[s]
             assetData = ci(s)
             # Variable "name" is getting the name of the crypto asset
             # How? This happens because cr() returns 8 different data points
@@ -170,20 +176,38 @@ with features:
             ranking = assetData[6]
 
             col_1.text(f"{ranking}. {name}")
-            col_1.markdown(f"*${price}*")
+            col_1.markdown(f"{spaces}*${price}*")
 
         # EQUITIES
-        equity_info = si()
+        equity_info = si()  # Returns a tuple made up of 4 arrays
         for e in range(10):
+            # the variables below are getting their values from equity_info
             rank = equity_info[0][e]
             name = equity_info[1][e]
             price = equity_info[2][e]
             price = comma(price)
 
             col_2.text(f"{rank}. {name}")
-            col_2.markdown(f"*${price}*")
+            col_2.markdown(f"{spaces}*${price}*")
 
         # ETFs
+        rank = []
+        name = ["SPDR S&P 500 ETF Trust", "iShares Core S&P 500",
+                "Vanguard Total Stock Market ETF", "Vanguard S&P 500 ETF",
+                "Invesco QQQ ETF", "Vanguard FTSE Developed Markets ETF",
+                "Vanguard Value ETF", "iShares Core MSCI EAFE ETF",
+                "iShares Core U.S. Aggregate Bond ETF",
+                "Vanguard Total Bond Market ETF"]
+        price = ["387.13", "389.74", "193.95", "356.95", "283.01",
+                "44.45", "137.91", "64.47", "103.6", "76.68"]
+        
+        # The for loop is adding the rank to the array and outputting it to the page
+        for n in range(10):
+            rank.append(str(n+1))
+
+            col_3.text(f"{rank[n]}. {name[n]}")
+            col_3.markdown(f"{spaces}*${price[n]}*")
+
 
         # ASSET MANAGERS
         rank = []
@@ -193,13 +217,13 @@ with features:
         aum = ["9.464 trillion", "8.4 trillion", "4.432 trillion", "4.23 trillion",
                "3.86 trillion", "3.274 trillion", "2.996 trillion", "2.953 trillion",
                "2.6 trillion", "2.372 trillion"]
-
+        
+        # The for loop is adding the rank to the array and outputting it to the page
         for n in range(10):
             rank.append(str(n+1))
 
             col_4.text(f"{rank[n]}. {name[n]}")
-            col_4.markdown(f"*${aum[n]}*")
-
+            col_4.markdown(f"{spaces}*${aum[n]}*")
 
     elif selection == "Currency converter":
         pass
