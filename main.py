@@ -7,17 +7,21 @@ from crypto import get_rank as cr
 from crypto import get_info as ci
 from stocks import  get_data as si
 
+# ----- Page configurations -----
 st.set_page_config(
     page_title="Deck Finance",
+    page_icon=":chart_with_upwards_trend:",
     layout="wide"
 )
 
+# ----- Container initialisation -----
 header = st.container()
 dataset = st.container()
 features = st.container()
 footer = st.container()
 
 
+# ----- Function initialisation -----
 def comma(value):
     value1 = str(value)
     values = []
@@ -88,9 +92,11 @@ def information_gathering_equity(symbol):
     return hist_data, name, industry, website, recommendation, summary, price, market_cap, week_change, news
 
 
+# ----- Header section -----
 with header:
     st.title("Deck Investments")
 
+# ----- Equity data section -----
 with dataset:
     st.subheader("Equities")
 
@@ -118,7 +124,7 @@ with dataset:
         cont_b2.caption("Industry")
         cont_b2.text(info[2])
         cont_b3.caption("website")
-        cont_b3.text(info[3])
+        cont_b3.write(f"[{info[3].replace('https://www.', '')}]({info[3]})")
         cont_b4.caption("Institutional recommendation")
         cont_b4.text(str(info[4]).upper())
 
@@ -130,8 +136,15 @@ with dataset:
         fig.update_xaxes(rangeslider_visible=True)
         cont_c1.plotly_chart(fig, use_container_width=True)
 
+        cont_c2.text("News")
+        # loop outputs the 4 most recent news articles
+        for i in range(5):
+            cont_c2.write(f"****{info[9][i]['title']}****")
+            cont_c2.write(f"by {info[9][i]['publisher']}")
+        
         cont_c2.text("AI predictions here.")
 
+# ----- Features section -----
 with features:
     st.subheader("Features")
 
@@ -227,3 +240,7 @@ with features:
 
     elif selection == "Currency converter":
         pass
+
+# ----- Footer section -----
+with footer:
+    pass
