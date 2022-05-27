@@ -143,6 +143,8 @@ with dataset:
             cont_c2.write(f"by {info[9][i]['publisher']}")
         
         cont_c2.text("AI predictions here.")
+        code = """print("Coming soon...")"""
+        cont_c2.code(code, language="python")
 
 # ----- Features section -----
 with features:
